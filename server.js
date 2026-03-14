@@ -5,7 +5,7 @@ const path = require('path');
 const app = express();
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
-app.use(express.static(path.join(__dirname, 'public')));
+express.static(path.join(__dirname))
 
 // In-memory state store
 let overlayState = {
@@ -34,7 +34,7 @@ app.post('/api/state', (req, res) => {
 
 // Serve index.html for all routes
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFilepath.join(__dirname, 'index.html')
 });
 
 const PORT = process.env.PORT || 3000;
