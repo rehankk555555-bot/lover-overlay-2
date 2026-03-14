@@ -1,43 +1,29 @@
 const express = require('express');
-const cors = require('cors');
 const path = require('path');
-
 const app = express();
-app.use(cors());
-app.use(express.json({ limit: '10mb' }));
-express.static(path.join(__dirname))
 
-// In-memory state store
-let overlayState = {
-  visible:  true,
-  photo:    null,
-  name:     'Meri Jaan 💕',
-  nickname: 'Sweetheart',
-  message:  'Tum mere dil ki dhadkan ho...',
-  theme:    'rose',
-  position: 'bottom-right',
-  heart:    true,
-  sparkles: true,
-  updatedAt: Date.now()
+app.use(express.json({ limit: '10mb' }));
+
+let state = {
+  visible: true, photo: null,
+  name: 'Meri Jaan 💕', nickname: 'Sweetheart',
+  message: 'Tum mere dil ki dhadkan ho...',
+  theme: 'rose', position: 'bottom-right',
+  heart: true, sparkles: true
 };
 
-// GET state
-app.get('/api/state', (req, res) => {
-  res.json(overlayState);
-});
+app.get('/api/state', (req, res) => res.json(state));
 
-// POST state (save from controller)
 app.post('/api/state', (req, res) => {
-  overlayState = { ...overlayState, ...req.body, updatedAt: Date.now() };
-  res.json({ ok: true, updatedAt: overlayState.updatedAt });
+  state = { ...state, ...req.body };
+  res.json({ ok: true });
 });
 
-// Serve index.html for all routes
+app.use(express.static(__dirname));
+
 app.get('*', (req, res) => {
-  res.sendFilepath.join(__dirname, 'index.html')
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`💕 Lover Overlay running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log('💕 Running on port', PORT));
