@@ -6,23 +6,15 @@
 <title>💕 Lover OBS Overlay</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --accent:#ff4d6d; --glow:rgba(255,77,109,0.35);
-  --bg:rgba(18,5,10,0.92); --text:#ffe0e6;
-  --border:rgba(255,77,109,0.45); --surface:rgba(255,255,255,0.04);
-}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--accent:#ff4d6d;--glow:rgba(255,77,109,0.35);--bg:rgba(18,5,10,0.92);--text:#ffe0e6;--border:rgba(255,77,109,0.45);--surface:rgba(255,255,255,0.04);}
 html,body{width:100%;min-height:100vh;}
-body{font-family:'DM Sans',sans-serif;background:radial-gradient(ellipse at 30% 20%,rgba(255,77,109,0.13) 0%,#080408 65%);color:var(--text);-webkit-font-smoothing:antialiased;}
+body{font-family:'DM Sans',sans-serif;background:radial-gradient(ellipse at 30% 20%,rgba(255,77,109,0.13) 0%,#080408 65%);color:var(--text);}
 .screen{display:none;}.screen.active{display:block;}
 #obs-screen{width:100vw;height:100vh;background:transparent!important;position:fixed;inset:0;}
-.overlay-card{position:fixed;background:var(--bg);border:1.5px solid var(--border);border-radius:22px;padding:14px 18px;box-shadow:0 0 48px var(--glow),0 12px 48px rgba(0,0,0,0.75);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);display:inline-flex;align-items:center;gap:14px;overflow:hidden;transition:opacity 0.5s ease,transform 0.5s ease;min-width:260px;max-width:600px;width:max-content;}
+.overlay-card{position:fixed;background:var(--bg);border:1.5px solid var(--border);border-radius:22px;padding:14px 18px;box-shadow:0 0 48px var(--glow),0 12px 48px rgba(0,0,0,0.75);backdrop-filter:blur(22px);display:inline-flex;align-items:center;gap:14px;overflow:hidden;transition:opacity 0.5s ease;min-width:260px;max-width:600px;width:max-content;}
 .overlay-card.hidden{opacity:0!important;pointer-events:none;}
-.pos-bottom-right{bottom:28px;right:28px;}
-.pos-bottom-left{bottom:28px;left:28px;}
-.pos-top-right{top:28px;right:28px;}
-.pos-top-left{top:28px;left:28px;}
-.pos-center{top:50%;left:50%;transform:translate(-50%,-50%);}
+.pos-bottom-right{bottom:28px;right:28px;}.pos-bottom-left{bottom:28px;left:28px;}.pos-top-right{top:28px;right:28px;}.pos-top-left{top:28px;left:28px;}.pos-center{top:50%;left:50%;transform:translate(-50%,-50%);}
 .photo-ring{width:72px;height:72px;border-radius:14px;border:2.5px solid var(--accent);box-shadow:0 0 20px var(--glow);overflow:hidden;flex-shrink:0;background:var(--glow);display:flex;align-items:center;justify-content:center;font-size:28px;position:relative;z-index:2;}
 .photo-ring img{width:100%;height:100%;object-fit:cover;display:block;}
 .card-text{flex:1;overflow:hidden;position:relative;z-index:2;min-width:120px;}
@@ -41,7 +33,6 @@ body{font-family:'DM Sans',sans-serif;background:radial-gradient(ellipse at 30% 
 .ctrl-header p{font-size:10px;opacity:.45;margin-top:3px;}
 .status-dot{width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 8px #22c55e;animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.status-dot.off{background:#666;box-shadow:none;animation:none;}
 .ctrl-body{padding:18px 16px;max-width:480px;margin:0 auto;display:flex;flex-direction:column;gap:14px;}
 .section{background:var(--surface);border:1px solid rgba(255,255,255,0.07);border-radius:18px;padding:16px;}
 .section h3{font-size:10px;letter-spacing:2.2px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;opacity:.85;}
@@ -57,14 +48,12 @@ body{font-family:'DM Sans',sans-serif;background:radial-gradient(ellipse at 30% 
 .photo-prev img{width:100%;height:100%;object-fit:cover;display:block;}
 .photo-btns{display:flex;flex-direction:column;gap:8px;}
 .btn{padding:10px 18px;border-radius:11px;border:1px solid var(--border);background:var(--glow);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .2s;white-space:nowrap;}
-.btn:hover{background:rgba(255,77,109,.3);}
 .btn.danger{border-color:rgba(255,80,80,.4);background:rgba(255,80,80,.1);color:#ff8888;}
 .btn.primary{background:var(--accent);color:#1a0008;font-weight:600;border-color:var(--accent);}
-.field{margin-bottom:14px;}
-.field:last-child{margin-bottom:0;}
+.field{margin-bottom:14px;}.field:last-child{margin-bottom:0;}
 .field label{display:block;font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--accent);margin-bottom:7px;opacity:.85;}
-.field input,.field textarea{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:11px;padding:11px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;}
-.field input:focus,.field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--glow);}
+.field input,.field textarea{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:11px;padding:11px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;}
+.field input:focus,.field textarea:focus{border-color:var(--accent);}
 .field textarea{resize:none;line-height:1.6;}
 .chips{display:flex;gap:8px;flex-wrap:wrap;}
 .chip{flex:1;min-width:68px;height:40px;border-radius:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;border:2px solid transparent;transition:all .2s;text-transform:capitalize;}
@@ -78,23 +67,16 @@ body{font-family:'DM Sans',sans-serif;background:radial-gradient(ellipse at 30% 
 .url-box{background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px;}
 .url-box .url-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
 .url-box .url-val{font-family:monospace;font-size:11.5px;color:rgba(255,224,230,.65);word-break:break-all;background:rgba(255,255,255,.04);padding:9px 11px;border-radius:9px;margin-bottom:9px;}
-.copy-btn{width:100%;padding:10px;border-radius:9px;border:1px solid var(--border);background:var(--glow);color:var(--text);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;transition:all .2s;}
+.copy-btn{width:100%;padding:10px;border-radius:9px;border:1px solid var(--border);background:var(--glow);color:var(--text);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;}
 .copy-btn.copied{background:rgba(34,197,94,.2);border-color:#22c55e;color:#4ade80;}
 .guide{border:1px solid var(--border);border-radius:14px;padding:16px;background:linear-gradient(135deg,rgba(0,0,0,.35),var(--glow));font-size:12.5px;line-height:1.9;}
 .guide b{color:var(--accent);}
 .guide .tip{margin-top:10px;padding:10px 12px;background:rgba(255,255,255,.05);border-radius:10px;color:var(--accent);font-size:11.5px;line-height:1.7;}
 #save-status{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--accent);color:#1a0008;padding:10px 24px;border-radius:30px;font-weight:700;font-size:13px;transition:transform .35s ease;z-index:999;pointer-events:none;}
 #save-status.show{transform:translateX(-50%) translateY(0);}
-#loading{position:fixed;inset:0;background:#080408;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;z-index:9999;transition:opacity .4s;}
-#loading.fade{opacity:0;pointer-events:none;}
-#loading h2{font-family:'Playfair Display',serif;color:var(--accent);font-size:22px;}
-#loading p{font-size:12px;opacity:.5;}
-.spinner{width:36px;height:36px;border-radius:50%;border:3px solid rgba(255,77,109,.2);border-top-color:var(--accent);animation:spin .8s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
-<div id="loading"><div class="spinner"></div><h2>💕 Lover Overlay</h2><p>Loading...</p></div>
 
 <div id="obs-screen" class="screen">
   <div class="overlay-card pos-bottom-right" id="overlay-card">
@@ -107,11 +89,11 @@ body{font-family:'DM Sans',sans-serif;background:radial-gradient(ellipse at 30% 
       <span style="left:86%;animation-delay:.5s;font-size:10px">💖</span>
     </div>
     <div id="fx-sparkles" class="sparkles">
-      <span style="left:5%;top:12%;animation-delay:0s;font-size:9px">✨</span>
-      <span style="left:28%;top:8%;animation-delay:.5s;font-size:11px">✨</span>
-      <span style="left:52%;top:15%;animation-delay:.9s;font-size:8px">✨</span>
-      <span style="left:74%;top:9%;animation-delay:1.3s;font-size:10px">✨</span>
-      <span style="left:90%;top:16%;animation-delay:.3s;font-size:9px">✨</span>
+      <span style="left:5%;top:12%;animation-delay:0s">✨</span>
+      <span style="left:28%;top:8%;animation-delay:.5s">✨</span>
+      <span style="left:52%;top:15%;animation-delay:.9s">✨</span>
+      <span style="left:74%;top:9%;animation-delay:1.3s">✨</span>
+      <span style="left:90%;top:16%;animation-delay:.3s">✨</span>
     </div>
     <div class="photo-ring" id="obs-photo">💖</div>
     <div class="card-text">
@@ -126,7 +108,7 @@ body{font-family:'DM Sans',sans-serif;background:radial-gradient(ellipse at 30% 
 <div id="ctrl-screen" class="screen">
   <div class="ctrl-header">
     <div>
-      <h1><span id="status-dot" class="status-dot"></span> Lover Overlay</h1>
+      <h1><span class="status-dot"></span> Lover Overlay</h1>
       <p>Mobile Controller · Live Sync to OBS</p>
     </div>
   </div>
@@ -134,7 +116,7 @@ body{font-family:'DM Sans',sans-serif;background:radial-gradient(ellipse at 30% 
     <div class="section">
       <h3>Overlay Control</h3>
       <div class="toggle-row">
-        <div class="info"><h4>OBS Overlay Visible</h4><p>Stream pe dikhao ya chhupao</p></div>
+        <div class="info"><h4>OBS Overlay Visible</h4><p>Dikhao ya chhupao</p></div>
         <button class="tog" id="tog-vis" onclick="toggleVis()"></button>
       </div>
     </div>
@@ -152,7 +134,7 @@ body{font-family:'DM Sans',sans-serif;background:radial-gradient(ellipse at 30% 
     <div class="section">
       <h3>✏️ Text</h3>
       <div class="field"><label>Naam</label><input type="text" id="in-name" placeholder="Meri Jaan 💕"></div>
-      <div class="field"><label>Nickname / Label</label><input type="text" id="in-nick" placeholder="Sweetheart"></div>
+      <div class="field"><label>Nickname</label><input type="text" id="in-nick" placeholder="Sweetheart"></div>
       <div class="field"><label>Message</label><textarea id="in-msg" rows="3" placeholder="Message likho..."></textarea></div>
       <button class="btn primary" onclick="saveText()" style="width:100%;margin-top:4px">💾 Save & Update</button>
     </div>
@@ -192,21 +174,23 @@ body{font-family:'DM Sans',sans-serif;background:radial-gradient(ellipse at 30% 
 <div id="save-status">✅ Saved!</div>
 
 <script>
-const THEMES={
-  rose:{accent:'#ff4d6d',glow:'rgba(255,77,109,.35)',bg:'rgba(18,5,10,.92)',text:'#ffe0e6',border:'rgba(255,77,109,.45)'},
-  violet:{accent:'#c084fc',glow:'rgba(192,132,252,.3)',bg:'rgba(12,5,22,.92)',text:'#f3e8ff',border:'rgba(192,132,252,.45)'},
-  gold:{accent:'#fbbf24',glow:'rgba(251,191,36,.28)',bg:'rgba(16,10,0,.92)',text:'#fef3c7',border:'rgba(251,191,36,.45)'},
-  cyan:{accent:'#22d3ee',glow:'rgba(34,211,238,.28)',bg:'rgba(0,12,22,.92)',text:'#e0f7fa',border:'rgba(34,211,238,.45)'},
-  pink:{accent:'#f472b6',glow:'rgba(244,114,182,.3)',bg:'rgba(18,5,14,.92)',text:'#fce7f3',border:'rgba(244,114,182,.45)'},
-};
+const THEMES={rose:{accent:'#ff4d6d',glow:'rgba(255,77,109,.35)',bg:'rgba(18,5,10,.92)',text:'#ffe0e6',border:'rgba(255,77,109,.45)'},violet:{accent:'#c084fc',glow:'rgba(192,132,252,.3)',bg:'rgba(12,5,22,.92)',text:'#f3e8ff',border:'rgba(192,132,252,.45)'},gold:{accent:'#fbbf24',glow:'rgba(251,191,36,.28)',bg:'rgba(16,10,0,.92)',text:'#fef3c7',border:'rgba(251,191,36,.45)'},cyan:{accent:'#22d3ee',glow:'rgba(34,211,238,.28)',bg:'rgba(0,12,22,.92)',text:'#e0f7fa',border:'rgba(34,211,238,.45)'},pink:{accent:'#f472b6',glow:'rgba(244,114,182,.3)',bg:'rgba(18,5,14,.92)',text:'#fce7f3',border:'rgba(244,114,182,.45)'}};
 const POSITIONS=['bottom-right','bottom-left','top-right','top-left','center'];
 let S={visible:true,photo:null,name:'Meri Jaan 💕',nickname:'Sweetheart',message:'Tum mere dil ki dhadkan ho...',theme:'rose',position:'bottom-right',heart:true,sparkles:true};
-async function fetchState(){try{return await(await fetch('/api/state')).json();}catch(e){return null;}}
+
+async function fetchState(){
+  try{
+    const ctrl=new AbortController();
+    setTimeout(()=>ctrl.abort(),4000);
+    const r=await fetch('/api/state',{signal:ctrl.signal});
+    return await r.json();
+  }catch(e){return null;}
+}
 async function pushState(d){try{await fetch('/api/state',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});}catch(e){}}
 function applyTheme(k){const t=THEMES[k]||THEMES.rose;const r=document.documentElement.style;r.setProperty('--accent',t.accent);r.setProperty('--glow',t.glow);r.setProperty('--bg',t.bg);r.setProperty('--text',t.text);r.setProperty('--border',t.border);}
-function renderOBS(){applyTheme(S.theme);const card=document.getElementById('overlay-card');POSITIONS.forEach(p=>card.classList.remove('pos-'+p));card.classList.add('pos-'+S.position);S.visible?card.classList.remove('hidden'):card.classList.add('hidden');const pr=document.getElementById('obs-photo');pr.innerHTML=S.photo?<img src="${S.photo}" alt="">:'💖';document.getElementById('obs-nick').textContent=S.nickname||'Sweetheart';document.getElementById('obs-name').textContent=S.name||'Meri Jaan 💕';document.getElementById('obs-msg').textContent=S.message||'';;document.getElementById('fx-hearts').style.display=S.heart?'':'none';document.getElementById('fx-sparkles').style.display=S.sparkles?'':'none';}
-function renderCtrl(){applyTheme(S.theme);const tv=document.getElementById('tog-vis');S.visible?tv.classList.add('on'):tv.classList.remove('on');const cp=document.getElementById('ctrl-photo');const rb=document.getElementById('rm-photo');if(S.photo){cp.innerHTML=<img src="${S.photo}" alt="">;rb.style.display='';}else{cp.innerHTML='💖';rb.style.display='none';}document.getElementById('in-name').value=S.name;document.getElementById('in-nick').value=S.nickname;document.getElementById('in-msg').value=S.message;document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',c.dataset.t===S.theme));document.querySelectorAll('.pos-btn').forEach(b=>b.classList.toggle('active',b.dataset.p===S.position));document.getElementById('btn-heart').classList.toggle('active',S.heart);document.getElementById('btn-sparkles').classList.toggle('active',S.sparkles);const base=location.origin;document.getElementById('obs-url').textContent=base+'/?mode=obs';document.getElementById('ctrl-url').textContent=base+'/?mode=ctrl';}
-function buildChips(){const c=document.getElementById('chip-row');Object.entries(THEMES).forEach(([k,t])=>{const el=document.createElement('div');el.className='chip';el.dataset.t=k;el.textContent=k;el.style.background=linear-gradient(135deg,${t.bg},${t.accent}44);el.style.color=t.accent;el.onclick=()=>{S.theme=k;pushState(S);renderCtrl();showToast();};c.appendChild(el);});}
+function renderOBS(){applyTheme(S.theme);const card=document.getElementById('overlay-card');POSITIONS.forEach(p=>card.classList.remove('pos-'+p));card.classList.add('pos-'+S.position);S.visible?card.classList.remove('hidden'):card.classList.add('hidden');document.getElementById('obs-photo').innerHTML=S.photo?`<img src="${S.photo}" alt="">`:'💖';document.getElementById('obs-nick').textContent=S.nickname||'Sweetheart';document.getElementById('obs-name').textContent=S.name||'Meri Jaan 💕';document.getElementById('obs-msg').textContent=S.message||'';document.getElementById('fx-hearts').style.display=S.heart?'':'none';document.getElementById('fx-sparkles').style.display=S.sparkles?'':'none';}
+function renderCtrl(){applyTheme(S.theme);const tv=document.getElementById('tog-vis');S.visible?tv.classList.add('on'):tv.classList.remove('on');const cp=document.getElementById('ctrl-photo');const rb=document.getElementById('rm-photo');if(S.photo){cp.innerHTML=`<img src="${S.photo}" alt="">`;rb.style.display='';}else{cp.innerHTML='💖';rb.style.display='none';}document.getElementById('in-name').value=S.name;document.getElementById('in-nick').value=S.nickname;document.getElementById('in-msg').value=S.message;document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',c.dataset.t===S.theme));document.querySelectorAll('.pos-btn').forEach(b=>b.classList.toggle('active',b.dataset.p===S.position));document.getElementById('btn-heart').classList.toggle('active',S.heart);document.getElementById('btn-sparkles').classList.toggle('active',S.sparkles);document.getElementById('obs-url').textContent=location.origin+'/?mode=obs';document.getElementById('ctrl-url').textContent=location.origin+'/?mode=ctrl';}
+function buildChips(){const c=document.getElementById('chip-row');Object.entries(THEMES).forEach(([k,t])=>{const el=document.createElement('div');el.className='chip';el.dataset.t=k;el.textContent=k;el.style.background=`linear-gradient(135deg,${t.bg},${t.accent}44)`;el.style.color=t.accent;el.onclick=()=>{S.theme=k;pushState(S);renderCtrl();showToast();};c.appendChild(el);});}
 function buildPos(){const g=document.getElementById('pos-grid');POSITIONS.forEach(p=>{const b=document.createElement('button');b.className='pos-btn';b.dataset.p=p;b.textContent=p.replace('-',' ');b.onclick=()=>{S.position=p;pushState(S);renderCtrl();showToast();};g.appendChild(b);});}
 function toggleVis(){S.visible=!S.visible;pushState(S);renderCtrl();showToast();}
 function onPhoto(e){const file=e.target.files[0];if(!file)return;const r=new FileReader();r.onload=ev=>{S.photo=ev.target.result;pushState(S);renderCtrl();showToast();};r.readAsDataURL(file);}
@@ -214,9 +198,23 @@ function rmPhoto(){S.photo=null;document.getElementById('file-in').value='';push
 function saveText(){S.name=document.getElementById('in-name').value.trim()||'Meri Jaan 💕';S.nickname=document.getElementById('in-nick').value.trim()||'Sweetheart';S.message=document.getElementById('in-msg').value.trim();pushState(S);renderCtrl();showToast();}
 function toggleFx(t){if(t==='heart')S.heart=!S.heart;if(t==='sparkles')S.sparkles=!S.sparkles;pushState(S);renderCtrl();showToast();}
 function copyUrl(type){const url=location.origin+(type==='obs'?'/?mode=obs':'/?mode=ctrl');navigator.clipboard.writeText(url).then(()=>{const btn=document.getElementById('copy-'+type);const orig=btn.textContent;btn.textContent='✅ Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent=orig;btn.classList.remove('copied');},2500);});}
-let _tt;
-function showToast(){const el=document.getElementById('save-status');el.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove('show'),2000);}
-(async()=>{const params=new URLSearchParams(location.search);const mode=params.get('mode');const loaded=await fetchState();if(loaded)S={...S,...loaded};const ld=document.getElementById('loading');ld.classList.add('fade');setTimeout(()=>ld.style.display='none',450);if(mode==='obs'){document.body.style.background='transparent';document.getElementById('obs-screen').classList.add('active');renderOBS();setInterval(async()=>{const d=await fetchState();if(d){S={...S,...d};renderOBS();}},900);}else{document.getElementById('ctrl-screen').classList.add('active');buildChips();buildPos();renderCtrl();setInterval(async()=>{const d=await fetchState();const dot=document.getElementById('status-dot');if(dot)d?dot.classList.remove('off'):dot.classList.add('off');},5000);}})();
+let _tt;function showToast(){const el=document.getElementById('save-status');el.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove('show'),2000);}
+
+(async()=>{
+  const mode=new URLSearchParams(location.search).get('mode');
+  const loaded=await fetchState();
+  if(loaded)S={...S,...loaded};
+  if(mode==='obs'){
+    document.body.style.background='transparent';
+    document.getElementById('obs-screen').classList.add('active');
+    renderOBS();
+    setInterval(async()=>{const d=await fetchState();if(d){S={...S,...d};renderOBS();}},900);
+  }else{
+    document.getElementById('ctrl-screen').classList.add('active');
+    buildChips();buildPos();renderCtrl();
+    setInterval(async()=>{const d=await fetchState();if(d){S={...S,...d};}},5000);
+  }
+})();
 </script>
 </body>
 </html>
