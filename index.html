@@ -3,118 +3,129 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>💕 Lover OBS Overlay</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>OBS Overlay Controller</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Orbitron:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-:root{--accent:#ff4d6d;--glow:rgba(255,77,109,0.35);--bg:rgba(18,5,10,0.92);--text:#ffe0e6;--border:rgba(255,77,109,0.45);--surface:rgba(255,255,255,0.04);}
+:root{--c1:#ff6a00;--c2:#1a3a8f;--c3:#ff3d00;--glow1:rgba(255,106,0,0.7);--glow2:rgba(26,58,143,0.7);--text:#ffffff;--surface:rgba(255,255,255,0.04);--border:rgba(255,106,0,0.45);}
 html,body{width:100%;min-height:100vh;}
-body{font-family:'DM Sans',sans-serif;background:radial-gradient(ellipse at 30% 20%,rgba(255,77,109,0.13) 0%,#080408 65%);color:var(--text);}
+body{font-family:'DM Sans',sans-serif;background:radial-gradient(ellipse at 30% 20%,rgba(255,106,0,0.13) 0%,#050810 65%);color:var(--text);}
 .screen{display:none;}.screen.active{display:block;}
 #obs-screen{width:100vw;height:100vh;background:transparent!important;position:fixed;inset:0;}
-.overlay-card{position:fixed;background:var(--bg);border:1.5px solid var(--border);border-radius:22px;padding:14px 18px;box-shadow:0 0 48px var(--glow),0 12px 48px rgba(0,0,0,0.75);backdrop-filter:blur(22px);display:inline-flex;align-items:center;gap:14px;overflow:hidden;transition:opacity 0.5s ease;min-width:260px;max-width:600px;width:max-content;}
-.overlay-card.hidden{opacity:0!important;pointer-events:none;}
-.pos-bottom-right{bottom:28px;right:28px;}.pos-bottom-left{bottom:28px;left:28px;}.pos-top-right{top:28px;right:28px;}.pos-top-left{top:28px;left:28px;}.pos-center{top:50%;left:50%;transform:translate(-50%,-50%);}
-.photo-ring{width:72px;height:72px;border-radius:14px;border:2.5px solid var(--accent);box-shadow:0 0 20px var(--glow);overflow:hidden;flex-shrink:0;background:var(--glow);display:flex;align-items:center;justify-content:center;font-size:28px;position:relative;z-index:2;}
-.photo-ring img{width:100%;height:100%;object-fit:cover;display:block;}
-.card-text{flex:1;overflow:hidden;position:relative;z-index:2;min-width:120px;}
-.card-label{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);margin-bottom:4px;opacity:0.9;white-space:nowrap;}
-.card-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:4px;text-shadow:0 0 16px var(--glow);white-space:nowrap;}
-.card-msg{font-size:12px;font-style:italic;color:rgba(255,224,230,0.75);line-height:1.5;white-space:nowrap;}
-.scan-bar{position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--accent),transparent);animation:scan 2.2s linear infinite;}
-@keyframes scan{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
-.float-hearts span{position:absolute;bottom:8%;font-size:13px;animation:floatUp 3s ease-in infinite;pointer-events:none;}
-@keyframes floatUp{0%{transform:translateY(0) scale(1);opacity:.8;}100%{transform:translateY(-95px) scale(.35);opacity:0;}}
-.sparkles span{position:absolute;font-size:11px;animation:twinkle 1.8s ease-in-out infinite;pointer-events:none;}
-@keyframes twinkle{0%,100%{opacity:.15;transform:scale(.6);}50%{opacity:1;transform:scale(1.4);}}
+
+/* ─── OVERLAY ─── */
+.overlay-wrap{position:fixed;display:inline-flex;align-items:center;transition:opacity 0.5s ease;}
+.overlay-wrap.hidden{opacity:0!important;pointer-events:none;}
+.pos-bottom-right{bottom:40px;right:40px;}
+.pos-bottom-left{bottom:40px;left:40px;}
+.pos-top-right{top:40px;right:40px;}
+.pos-top-left{top:40px;left:40px;}
+.pos-center{top:50%;left:50%;transform:translate(-50%,-50%);}
+
+.obs-circle{
+  width:110px;height:110px;border-radius:50%;
+  border:3px solid #d0d0d0;
+  box-shadow:0 0 0 2px rgba(255,106,0,0.5),0 0 28px rgba(255,106,0,0.9),0 0 55px rgba(255,80,0,0.4),inset 0 0 20px rgba(26,58,143,0.3);
+  overflow:hidden;flex-shrink:0;
+  background:linear-gradient(135deg,#1a3a8f,#0a1a4a);
+  display:flex;align-items:center;justify-content:center;font-size:36px;
+  position:relative;z-index:5;margin-right:-16px;
+}
+.obs-circle img{width:100%;height:100%;object-fit:cover;display:block;}
+
+.obs-bar{
+  position:relative;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:12px 40px 12px 32px;
+  min-width:280px;max-width:600px;width:max-content;
+  background:linear-gradient(90deg,#0a1e5e 0%,#112580 50%,#0a1845 100%);
+  clip-path:polygon(0 0,calc(100% - 22px) 0,100% 50%,calc(100% - 22px) 100%,0 100%);
+  z-index:4;
+}
+.obs-bar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--c1),var(--c3),rgba(255,106,0,0.1));}
+.obs-bar::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--c1),var(--c3),rgba(255,106,0,0.1));}
+
+.bar-mid-line{position:absolute;left:28px;right:28px;top:50%;height:1px;background:linear-gradient(90deg,rgba(255,106,0,0.5),rgba(255,106,0,0.05));pointer-events:none;}
+.bar-scan{position:absolute;top:0;bottom:0;width:2px;background:linear-gradient(180deg,transparent,rgba(255,130,0,0.7),transparent);animation:scanV 2.5s linear infinite;pointer-events:none;}
+@keyframes scanV{from{left:-2px}to{left:110%}}
+
+.obs-shadow{position:absolute;bottom:-9px;left:14px;right:8px;height:9px;background:linear-gradient(90deg,rgba(255,100,0,0.35),rgba(26,58,143,0.2),transparent);clip-path:polygon(0 0,calc(100% - 12px) 0,100% 100%,0 100%);z-index:3;}
+
+.obs-nickname{font-family:'Orbitron',monospace;font-size:10px;letter-spacing:3.5px;text-transform:uppercase;color:var(--c1);margin-bottom:4px;text-shadow:0 0 12px var(--glow1);white-space:nowrap;}
+.obs-name{font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;color:#fff;line-height:1.1;text-shadow:0 0 20px rgba(255,255,255,0.4),0 2px 4px rgba(0,0,0,0.8);white-space:nowrap;margin-bottom:2px;}
+.obs-msg{font-family:'DM Sans',sans-serif;font-size:12px;color:rgba(255,200,150,0.85);font-style:italic;white-space:nowrap;}
+
+/* ─── CONTROLLER ─── */
 #ctrl-screen{padding-bottom:60px;}
-.ctrl-header{position:sticky;top:0;z-index:50;background:rgba(8,3,6,0.97);border-bottom:1px solid var(--border);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(20px);}
-.ctrl-header h1{font-family:'Playfair Display',serif;font-size:19px;color:var(--accent);display:flex;align-items:center;gap:8px;}
+.ctrl-header{position:sticky;top:0;z-index:50;background:rgba(5,8,16,0.97);border-bottom:1px solid var(--border);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(20px);}
+.ctrl-header h1{font-family:'Orbitron',monospace;font-size:15px;color:var(--c1);display:flex;align-items:center;gap:8px;}
 .ctrl-header p{font-size:10px;opacity:.45;margin-top:3px;}
 .status-dot{width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 8px #22c55e;animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 .ctrl-body{padding:18px 16px;max-width:480px;margin:0 auto;display:flex;flex-direction:column;gap:14px;}
 .section{background:var(--surface);border:1px solid rgba(255,255,255,0.07);border-radius:18px;padding:16px;}
-.section h3{font-size:10px;letter-spacing:2.2px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;opacity:.85;}
+.section h3{font-size:10px;letter-spacing:2.2px;text-transform:uppercase;color:var(--c1);margin-bottom:14px;opacity:.85;}
 .toggle-row{display:flex;align-items:center;justify-content:space-between;}
 .toggle-row .info h4{font-size:15px;font-weight:500;}
 .toggle-row .info p{font-size:11px;opacity:.5;margin-top:2px;}
 .tog{width:54px;height:29px;border-radius:15px;background:rgba(255,255,255,0.1);cursor:pointer;position:relative;transition:background .3s;flex-shrink:0;border:none;outline:none;}
-.tog.on{background:var(--accent);}
+.tog.on{background:var(--c1);}
 .tog::after{content:'';position:absolute;top:3.5px;left:3.5px;width:22px;height:22px;border-radius:50%;background:#fff;transition:left .3s;box-shadow:0 2px 8px rgba(0,0,0,.4);}
 .tog.on::after{left:28.5px;}
 .photo-area{display:flex;align-items:center;gap:16px;}
-.photo-prev{width:74px;height:74px;border-radius:14px;border:2.5px solid var(--accent);box-shadow:0 0 22px var(--glow);overflow:hidden;background:var(--glow);display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0;}
+.photo-prev{width:74px;height:74px;border-radius:50%;border:2.5px solid var(--c1);box-shadow:0 0 22px var(--glow1);overflow:hidden;background:linear-gradient(135deg,#1a3a8f,#0a1a4a);display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0;}
 .photo-prev img{width:100%;height:100%;object-fit:cover;display:block;}
 .photo-btns{display:flex;flex-direction:column;gap:8px;}
-.btn{padding:10px 18px;border-radius:11px;border:1px solid var(--border);background:var(--glow);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.btn{padding:10px 18px;border-radius:11px;border:1px solid var(--border);background:rgba(255,106,0,0.15);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.btn:hover{background:rgba(255,106,0,0.3);}
 .btn.danger{border-color:rgba(255,80,80,.4);background:rgba(255,80,80,.1);color:#ff8888;}
-.btn.primary{background:var(--accent);color:#1a0008;font-weight:600;border-color:var(--accent);}
+.btn.primary{background:var(--c1);color:#fff;font-weight:600;border-color:var(--c1);}
 .field{margin-bottom:14px;}.field:last-child{margin-bottom:0;}
-.field label{display:block;font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--accent);margin-bottom:7px;opacity:.85;}
+.field label{display:block;font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--c1);margin-bottom:7px;opacity:.85;}
 .field input,.field textarea{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:11px;padding:11px 14px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;}
-.field input:focus,.field textarea:focus{border-color:var(--accent);}
+.field input:focus,.field textarea:focus{border-color:var(--c1);}
 .field textarea{resize:none;line-height:1.6;}
-.chips{display:flex;gap:8px;flex-wrap:wrap;}
-.chip{flex:1;min-width:68px;height:40px;border-radius:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;border:2px solid transparent;transition:all .2s;text-transform:capitalize;}
-.chip.active{border-color:var(--accent)!important;}
 .pos-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.pos-btn{padding:10px 8px;border-radius:11px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:rgba(255,224,230,.45);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;text-transform:capitalize;transition:all .2s;}
-.pos-btn.active{border-color:var(--accent);background:var(--glow);color:var(--accent);font-weight:600;}
-.fx-row{display:flex;gap:10px;}
-.fx-btn{flex:1;padding:11px 10px;border-radius:11px;border:1px solid rgba(255,255,255,.08);background:transparent;color:rgba(255,224,230,.45);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .2s;text-align:center;}
-.fx-btn.active{border-color:var(--accent);background:var(--glow);color:var(--accent);font-weight:600;}
+.pos-btn{padding:10px 8px;border-radius:11px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:rgba(255,255,255,.45);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;text-transform:capitalize;transition:all .2s;}
+.pos-btn.active{border-color:var(--c1);background:rgba(255,106,0,0.15);color:var(--c1);font-weight:600;}
 .url-box{background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px;}
-.url-box .url-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
-.url-box .url-val{font-family:monospace;font-size:11.5px;color:rgba(255,224,230,.65);word-break:break-all;background:rgba(255,255,255,.04);padding:9px 11px;border-radius:9px;margin-bottom:9px;}
-.copy-btn{width:100%;padding:10px;border-radius:9px;border:1px solid var(--border);background:var(--glow);color:var(--text);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;}
+.url-box .url-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--c1);margin-bottom:8px;}
+.url-box .url-val{font-family:monospace;font-size:11.5px;color:rgba(255,255,255,.65);word-break:break-all;background:rgba(255,255,255,.04);padding:9px 11px;border-radius:9px;margin-bottom:9px;}
+.copy-btn{width:100%;padding:10px;border-radius:9px;border:1px solid var(--border);background:rgba(255,106,0,0.15);color:var(--text);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;}
 .copy-btn.copied{background:rgba(34,197,94,.2);border-color:#22c55e;color:#4ade80;}
-.guide{border:1px solid var(--border);border-radius:14px;padding:16px;background:linear-gradient(135deg,rgba(0,0,0,.35),var(--glow));font-size:12.5px;line-height:1.9;}
-.guide b{color:var(--accent);}
-.guide .tip{margin-top:10px;padding:10px 12px;background:rgba(255,255,255,.05);border-radius:10px;color:var(--accent);font-size:11.5px;line-height:1.7;}
-#save-status{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--accent);color:#1a0008;padding:10px 24px;border-radius:30px;font-weight:700;font-size:13px;transition:transform .35s ease;z-index:999;pointer-events:none;}
+.guide{border:1px solid var(--border);border-radius:14px;padding:16px;background:linear-gradient(135deg,rgba(0,0,0,.35),rgba(255,106,0,0.1));font-size:12.5px;line-height:1.9;}
+.guide b{color:var(--c1);}
+.guide .tip{margin-top:10px;padding:10px 12px;background:rgba(255,255,255,.05);border-radius:10px;color:var(--c1);font-size:11.5px;line-height:1.7;}
+#save-status{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--c1);color:#fff;padding:10px 24px;border-radius:30px;font-weight:700;font-size:13px;transition:transform .35s ease;z-index:999;pointer-events:none;}
 #save-status.show{transform:translateX(-50%) translateY(0);}
 </style>
 </head>
 <body>
 
 <div id="obs-screen" class="screen">
-  <div class="overlay-card pos-bottom-right" id="overlay-card">
-    <div id="fx-hearts" class="float-hearts">
-      <span style="left:8%;animation-delay:0s;font-size:12px">💕</span>
-      <span style="left:22%;animation-delay:.7s;font-size:16px">💖</span>
-      <span style="left:38%;animation-delay:1.3s;font-size:11px">💗</span>
-      <span style="left:54%;animation-delay:.3s;font-size:14px">💕</span>
-      <span style="left:70%;animation-delay:1.0s;font-size:13px">💓</span>
-      <span style="left:86%;animation-delay:.5s;font-size:10px">💖</span>
+  <div class="overlay-wrap pos-bottom-right" id="overlay-wrap">
+    <div class="obs-circle" id="obs-photo">🎤</div>
+    <div class="obs-bar">
+      <div class="bar-mid-line"></div>
+      <div class="bar-scan"></div>
+      <div class="obs-nickname" id="obs-nick">NAAT KHAN</div>
+      <div class="obs-name" id="obs-name">Mohammad Ali Faizi</div>
+      <div class="obs-msg" id="obs-msg">Live on Stage</div>
     </div>
-    <div id="fx-sparkles" class="sparkles">
-      <span style="left:5%;top:12%;animation-delay:0s">✨</span>
-      <span style="left:28%;top:8%;animation-delay:.5s">✨</span>
-      <span style="left:52%;top:15%;animation-delay:.9s">✨</span>
-      <span style="left:74%;top:9%;animation-delay:1.3s">✨</span>
-      <span style="left:90%;top:16%;animation-delay:.3s">✨</span>
-    </div>
-    <div class="photo-ring" id="obs-photo">💖</div>
-    <div class="card-text">
-      <div class="card-label" id="obs-nick">Sweetheart</div>
-      <div class="card-name" id="obs-name">Meri Jaan 💕</div>
-      <div class="card-msg" id="obs-msg">Tum mere dil ki dhadkan ho...</div>
-    </div>
-    <div class="scan-bar"></div>
+    <div class="obs-shadow"></div>
   </div>
 </div>
 
 <div id="ctrl-screen" class="screen">
   <div class="ctrl-header">
     <div>
-      <h1><span class="status-dot"></span> Lover Overlay</h1>
+      <h1><span class="status-dot"></span> Overlay Control</h1>
       <p>Mobile Controller · Live Sync to OBS</p>
     </div>
   </div>
   <div class="ctrl-body">
     <div class="section">
-      <h3>Overlay Control</h3>
+      <h3>Overlay On/Off</h3>
       <div class="toggle-row">
         <div class="info"><h4>OBS Overlay Visible</h4><p>Dikhao ya chhupao</p></div>
         <button class="tog" id="tog-vis" onclick="toggleVis()"></button>
@@ -123,7 +134,7 @@ body{font-family:'DM Sans',sans-serif;background:radial-gradient(ellipse at 30% 
     <div class="section">
       <h3>📸 Photo</h3>
       <div class="photo-area">
-        <div class="photo-prev" id="ctrl-photo">💖</div>
+        <div class="photo-prev" id="ctrl-photo">🎤</div>
         <div class="photo-btns">
           <input type="file" id="file-in" accept="image/*" style="display:none" onchange="onPhoto(event)">
           <button class="btn" onclick="document.getElementById('file-in').click()">📷 Photo Choose Karo</button>
@@ -133,19 +144,14 @@ body{font-family:'DM Sans',sans-serif;background:radial-gradient(ellipse at 30% 
     </div>
     <div class="section">
       <h3>✏️ Text</h3>
-      <div class="field"><label>Naam</label><input type="text" id="in-name" placeholder="Meri Jaan 💕"></div>
-      <div class="field"><label>Nickname</label><input type="text" id="in-nick" placeholder="Sweetheart"></div>
-      <div class="field"><label>Message</label><textarea id="in-msg" rows="3" placeholder="Message likho..."></textarea></div>
+      <div class="field"><label>Naam (Bada Text)</label><input type="text" id="in-name" placeholder="Mohammad Ali Faizi"></div>
+      <div class="field"><label>Label (Upar Chhota)</label><input type="text" id="in-nick" placeholder="NAAT KHAN"></div>
+      <div class="field"><label>Message (Neeche)</label><textarea id="in-msg" rows="2" placeholder="Live on Stage..."></textarea></div>
       <button class="btn primary" onclick="saveText()" style="width:100%;margin-top:4px">💾 Save & Update</button>
     </div>
-    <div class="section"><h3>🎨 Theme</h3><div class="chips" id="chip-row"></div></div>
-    <div class="section"><h3>📍 Position</h3><div class="pos-grid" id="pos-grid"></div></div>
     <div class="section">
-      <h3>✨ Effects</h3>
-      <div class="fx-row">
-        <button class="fx-btn" id="btn-heart" onclick="toggleFx('heart')">💕 Hearts</button>
-        <button class="fx-btn" id="btn-sparkles" onclick="toggleFx('sparkles')">✨ Sparkles</button>
-      </div>
+      <h3>📍 Position</h3>
+      <div class="pos-grid" id="pos-grid"></div>
     </div>
     <div class="section">
       <h3>🔗 URLs</h3>
@@ -174,31 +180,73 @@ body{font-family:'DM Sans',sans-serif;background:radial-gradient(ellipse at 30% 
 <div id="save-status">✅ Saved!</div>
 
 <script>
-const THEMES={rose:{accent:'#ff4d6d',glow:'rgba(255,77,109,.35)',bg:'rgba(18,5,10,.92)',text:'#ffe0e6',border:'rgba(255,77,109,.45)'},violet:{accent:'#c084fc',glow:'rgba(192,132,252,.3)',bg:'rgba(12,5,22,.92)',text:'#f3e8ff',border:'rgba(192,132,252,.45)'},gold:{accent:'#fbbf24',glow:'rgba(251,191,36,.28)',bg:'rgba(16,10,0,.92)',text:'#fef3c7',border:'rgba(251,191,36,.45)'},cyan:{accent:'#22d3ee',glow:'rgba(34,211,238,.28)',bg:'rgba(0,12,22,.92)',text:'#e0f7fa',border:'rgba(34,211,238,.45)'},pink:{accent:'#f472b6',glow:'rgba(244,114,182,.3)',bg:'rgba(18,5,14,.92)',text:'#fce7f3',border:'rgba(244,114,182,.45)'}};
 const POSITIONS=['bottom-right','bottom-left','top-right','top-left','center'];
-let S={visible:true,photo:null,name:'Meri Jaan 💕',nickname:'Sweetheart',message:'Tum mere dil ki dhadkan ho...',theme:'rose',position:'bottom-right',heart:true,sparkles:true};
+let S={visible:true,photo:null,name:'Mohammad Ali Faizi',nickname:'NAAT KHAN',message:'Live on Stage',position:'bottom-right'};
 
 async function fetchState(){
-  try{
-    const ctrl=new AbortController();
-    setTimeout(()=>ctrl.abort(),4000);
-    const r=await fetch('/api/state',{signal:ctrl.signal});
-    return await r.json();
-  }catch(e){return null;}
+  try{const ctrl=new AbortController();setTimeout(()=>ctrl.abort(),4000);return await(await fetch('/api/state',{signal:ctrl.signal})).json();}
+  catch(e){return null;}
 }
-async function pushState(d){try{await fetch('/api/state',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});}catch(e){}}
-function applyTheme(k){const t=THEMES[k]||THEMES.rose;const r=document.documentElement.style;r.setProperty('--accent',t.accent);r.setProperty('--glow',t.glow);r.setProperty('--bg',t.bg);r.setProperty('--text',t.text);r.setProperty('--border',t.border);}
-function renderOBS(){applyTheme(S.theme);const card=document.getElementById('overlay-card');POSITIONS.forEach(p=>card.classList.remove('pos-'+p));card.classList.add('pos-'+S.position);S.visible?card.classList.remove('hidden'):card.classList.add('hidden');document.getElementById('obs-photo').innerHTML=S.photo?`<img src="${S.photo}" alt="">`:'💖';document.getElementById('obs-nick').textContent=S.nickname||'Sweetheart';document.getElementById('obs-name').textContent=S.name||'Meri Jaan 💕';document.getElementById('obs-msg').textContent=S.message||'';document.getElementById('fx-hearts').style.display=S.heart?'':'none';document.getElementById('fx-sparkles').style.display=S.sparkles?'':'none';}
-function renderCtrl(){applyTheme(S.theme);const tv=document.getElementById('tog-vis');S.visible?tv.classList.add('on'):tv.classList.remove('on');const cp=document.getElementById('ctrl-photo');const rb=document.getElementById('rm-photo');if(S.photo){cp.innerHTML=`<img src="${S.photo}" alt="">`;rb.style.display='';}else{cp.innerHTML='💖';rb.style.display='none';}document.getElementById('in-name').value=S.name;document.getElementById('in-nick').value=S.nickname;document.getElementById('in-msg').value=S.message;document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',c.dataset.t===S.theme));document.querySelectorAll('.pos-btn').forEach(b=>b.classList.toggle('active',b.dataset.p===S.position));document.getElementById('btn-heart').classList.toggle('active',S.heart);document.getElementById('btn-sparkles').classList.toggle('active',S.sparkles);document.getElementById('obs-url').textContent=location.origin+'/?mode=obs';document.getElementById('ctrl-url').textContent=location.origin+'/?mode=ctrl';}
-function buildChips(){const c=document.getElementById('chip-row');Object.entries(THEMES).forEach(([k,t])=>{const el=document.createElement('div');el.className='chip';el.dataset.t=k;el.textContent=k;el.style.background=`linear-gradient(135deg,${t.bg},${t.accent}44)`;el.style.color=t.accent;el.onclick=()=>{S.theme=k;pushState(S);renderCtrl();showToast();};c.appendChild(el);});}
-function buildPos(){const g=document.getElementById('pos-grid');POSITIONS.forEach(p=>{const b=document.createElement('button');b.className='pos-btn';b.dataset.p=p;b.textContent=p.replace('-',' ');b.onclick=()=>{S.position=p;pushState(S);renderCtrl();showToast();};g.appendChild(b);});}
+async function pushState(d){
+  try{await fetch('/api/state',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});}catch(e){}
+}
+
+function renderOBS(){
+  const wrap=document.getElementById('overlay-wrap');
+  POSITIONS.forEach(p=>wrap.classList.remove('pos-'+p));
+  wrap.classList.add('pos-'+S.position);
+  S.visible?wrap.classList.remove('hidden'):wrap.classList.add('hidden');
+  const ph=document.getElementById('obs-photo');
+  ph.innerHTML=S.photo?`<img src="${S.photo}" alt="">`:'🎤';
+  document.getElementById('obs-nick').textContent=S.nickname||'NAAT KHAN';
+  document.getElementById('obs-name').textContent=S.name||'Mohammad Ali Faizi';
+  document.getElementById('obs-msg').textContent=S.message||'';
+}
+
+function renderCtrl(){
+  const tv=document.getElementById('tog-vis');
+  S.visible?tv.classList.add('on'):tv.classList.remove('on');
+  const cp=document.getElementById('ctrl-photo');
+  const rb=document.getElementById('rm-photo');
+  if(S.photo){cp.innerHTML=`<img src="${S.photo}" alt="">`;rb.style.display='';}
+  else{cp.innerHTML='🎤';rb.style.display='none';}
+  document.getElementById('in-name').value=S.name;
+  document.getElementById('in-nick').value=S.nickname;
+  document.getElementById('in-msg').value=S.message;
+  document.querySelectorAll('.pos-btn').forEach(b=>b.classList.toggle('active',b.dataset.p===S.position));
+  document.getElementById('obs-url').textContent=location.origin+'/?mode=obs';
+  document.getElementById('ctrl-url').textContent=location.origin+'/?mode=ctrl';
+}
+
+function buildPos(){
+  const g=document.getElementById('pos-grid');
+  POSITIONS.forEach(p=>{
+    const b=document.createElement('button');
+    b.className='pos-btn';b.dataset.p=p;b.textContent=p.replace('-',' ');
+    b.onclick=()=>{S.position=p;pushState(S);renderCtrl();showToast();};
+    g.appendChild(b);
+  });
+}
+
 function toggleVis(){S.visible=!S.visible;pushState(S);renderCtrl();showToast();}
 function onPhoto(e){const file=e.target.files[0];if(!file)return;const r=new FileReader();r.onload=ev=>{S.photo=ev.target.result;pushState(S);renderCtrl();showToast();};r.readAsDataURL(file);}
 function rmPhoto(){S.photo=null;document.getElementById('file-in').value='';pushState(S);renderCtrl();showToast();}
-function saveText(){S.name=document.getElementById('in-name').value.trim()||'Meri Jaan 💕';S.nickname=document.getElementById('in-nick').value.trim()||'Sweetheart';S.message=document.getElementById('in-msg').value.trim();pushState(S);renderCtrl();showToast();}
-function toggleFx(t){if(t==='heart')S.heart=!S.heart;if(t==='sparkles')S.sparkles=!S.sparkles;pushState(S);renderCtrl();showToast();}
-function copyUrl(type){const url=location.origin+(type==='obs'?'/?mode=obs':'/?mode=ctrl');navigator.clipboard.writeText(url).then(()=>{const btn=document.getElementById('copy-'+type);const orig=btn.textContent;btn.textContent='✅ Copied!';btn.classList.add('copied');setTimeout(()=>{btn.textContent=orig;btn.classList.remove('copied');},2500);});}
-let _tt;function showToast(){const el=document.getElementById('save-status');el.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove('show'),2000);}
+function saveText(){
+  S.name=document.getElementById('in-name').value.trim()||'Mohammad Ali Faizi';
+  S.nickname=document.getElementById('in-nick').value.trim()||'NAAT KHAN';
+  S.message=document.getElementById('in-msg').value.trim();
+  pushState(S);renderCtrl();showToast();
+}
+function copyUrl(type){
+  const url=location.origin+(type==='obs'?'/?mode=obs':'/?mode=ctrl');
+  navigator.clipboard.writeText(url).then(()=>{
+    const btn=document.getElementById('copy-'+type);
+    const orig=btn.textContent;btn.textContent='✅ Copied!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent=orig;btn.classList.remove('copied');},2500);
+  });
+}
+let _tt;
+function showToast(){const el=document.getElementById('save-status');el.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove('show'),2000);}
 
 (async()=>{
   const mode=new URLSearchParams(location.search).get('mode');
@@ -211,8 +259,7 @@ let _tt;function showToast(){const el=document.getElementById('save-status');el.
     setInterval(async()=>{const d=await fetchState();if(d){S={...S,...d};renderOBS();}},900);
   }else{
     document.getElementById('ctrl-screen').classList.add('active');
-    buildChips();buildPos();renderCtrl();
-    setInterval(async()=>{const d=await fetchState();if(d){S={...S,...d};}},5000);
+    buildPos();renderCtrl();
   }
 })();
 </script>
